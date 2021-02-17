@@ -16,6 +16,16 @@ class HashMap {
     }
     return hash >>> 0;
   }
+
+  // method for retrieving item from a hash map
+  get(key) {
+    const index = this._findSlot(key);
+    if (this._hashTable[index] === undefined) {
+      throw new Error("Key error");
+    }
+    return this._hashTable[index].value;
+  }
+
   // adds an item to the hasp map once a correct slot is found
   set(key, value) {
     // checks whether the load ratio is greater than the given maximum
@@ -55,7 +65,7 @@ class HashMap {
     }
   }
 
-    // recreate the hash map from scratch using a larger capacity
+  // recreate the hash map from scratch using a larger capacity
   _resize(size) {
     const oldSlots = this._hashTable;
     this._capacity = size;
@@ -64,10 +74,9 @@ class HashMap {
     this._hashTable = [];
 
     for (const slot of oldSlots) {
-        if (slot !== undefined) {
-            this.set(slot.key, slot.value);
-        }
+      if (slot !== undefined) {
+        this.set(slot.key, slot.value);
+      }
     }
-}
-    
+  }
 }
