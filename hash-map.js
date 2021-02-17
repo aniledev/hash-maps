@@ -54,4 +54,20 @@ class HashMap {
       }
     }
   }
+
+    // recreate the hash map from scratch using a larger capacity
+  _resize(size) {
+    const oldSlots = this._hashTable;
+    this._capacity = size;
+    // Reset the length - it will get rebuilt as you add the items back
+    this.length = 0;
+    this._hashTable = [];
+
+    for (const slot of oldSlots) {
+        if (slot !== undefined) {
+            this.set(slot.key, slot.value);
+        }
+    }
+}
+    
 }
