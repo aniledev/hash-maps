@@ -7,16 +7,6 @@ class HashMap {
     this._deleted = 0;
   }
 
-  //takes a string and hashes it, outputting a number. This is the famous djb2 algorithm
-  static _hashString(string) {
-    let hash = 5381;
-    for (let i = 0; i < string.length; i++) {
-      hash = (hash << 5) + hash + string.charCodeAt(i);
-      hash = hash & hash;
-    }
-    return hash >>> 0;
-  }
-
   // method for retrieving item from a hash map
   get(key) {
     const index = this._findSlot(key);
@@ -49,7 +39,7 @@ class HashMap {
     };
   }
 
-    // method for deleting an item from a has map
+  // method for deleting an item from a has map
   delete(key) {
     const index = this._findSlot(key);
     const slot = this._hashTable[index];
@@ -90,5 +80,21 @@ class HashMap {
         this.set(slot.key, slot.value);
       }
     }
+  }
+
+  //takes a string and hashes it, outputting a number. This is the famous djb2 algorithm
+  static _hashString(string) {
+    let hash = 5381;
+    for (let i = 0; i < string.length; i++) {
+      //Bitwise left shift with 5 0s - this would be similar to
+      //hash*31, 31 being the decent prime number
+      //but bit shifting is a faster way to do this
+      //tradeoff is understandability
+      hash = (hash << 5) + hash + string.charCodeAt(i);
+      hash = hash & hash;
+    }
+    //making sure hash is unsigned - meaning non-negative number.
+
+    return hash >>> 0;
   }
 }
