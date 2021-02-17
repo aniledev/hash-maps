@@ -76,10 +76,11 @@ class HashMap {
     this._capacity = size;
     // Reset the length - it will get rebuilt as you add the items back
     this.length = 0;
+    this._deleted = 0;
     this._hashTable = [];
 
     for (const slot of oldSlots) {
-      if (slot !== undefined) {
+      if (slot !== undefined && !slot.DELETED) {
         this.set(slot.key, slot.value);
       }
     }
