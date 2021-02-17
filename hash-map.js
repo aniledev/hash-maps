@@ -41,12 +41,15 @@ class HashMap {
 
   // method for deleting an item from a has map
   delete(key) {
+    // finds the correct slot for the key and sets the deleted flag to true
     const index = this._findSlot(key);
     const slot = this._hashTable[index];
     if (slot === undefined) {
       throw new Error("Key error");
     }
+    // each slot now has a delete property
     slot.DELETED = true;
+    // when an item is deleted, the length decreases
     this.length--;
     this._deleted++;
   }
