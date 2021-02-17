@@ -49,6 +49,18 @@ class HashMap {
     };
   }
 
+    // method for deleting an item from a has map
+  delete(key) {
+    const index = this._findSlot(key);
+    const slot = this._hashTable[index];
+    if (slot === undefined) {
+      throw new Error("Key error");
+    }
+    slot.DELETED = true;
+    this.length--;
+    this._deleted++;
+  }
+
   // finds the correct slot for an item
   _findSlot(key) {
     // calculates the hash of the key
